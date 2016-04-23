@@ -1,6 +1,6 @@
 {
   "name": "Extending Unity - Bezier Path: Tutorial 1",
   "tagline": "Project overview, building and displaying the data structure",
-  "body": "### Introduction\r\n\r\n### Overview\r\n\r\n### Qubic Bézier Curve\r\n\r\n### BezierPoint\r\n\r\n### Point Iteration\r\n\r\n### BezierPath\r\n\r\n### Displaying the path",
+  "body": "### Introduction\r\nUnity is well known for its Asset Store and the vast amount of resources available there. Anyone can download tools to simplify the production of their games. Many tools have custom editors for managing the data related to it. Wouldn't it be great to be able to make tools like this ourselves? Unity offers an API for extending the editor through scripts in your project. Throughout the parts of this guide, we will learn to master this power and become a Wizard of Unity.\r\n\r\nEditor scripts should be placed in a folder named \"Editor\", so that Unity will know that its an editor script..\r\n\r\n### Overview\r\n\r\n### Qubic Bézier Curve\r\n\r\n### BezierPoint\r\n\r\n### Point Iteration\r\n\r\n### BezierPath\r\n\r\n### Displaying the path",
   "note": "Don't delete this file! It's used internally to help with page regeneration."
 }
