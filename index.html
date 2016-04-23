@@ -29,6 +29,42 @@
 <h3>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
 
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
+<span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">BezierPoint</span>
+{
+    <span class="pl-c">// TODO: Make handles act according to current ArmMode in the 'set' accessors</span>
+    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleBack</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleFront</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+
+    <span class="pl-k">public</span> Vector3 position;
+    <span class="pl-k">public</span> List&lt;Vector3&gt; points = <span class="pl-k">new</span> List&lt;Vector3&gt;();
+    <span class="pl-k">public</span> List&lt;<span class="pl-k">float</span>&gt; lengths = <span class="pl-k">new</span> List&lt;<span class="pl-k">float</span>&gt;();
+    <span class="pl-k">public</span> <span class="pl-k">float</span> length = <span class="pl-c1">0</span>;
+    <span class="pl-k">public</span> <span class="pl-k">int</span> iterations;
+    <span class="pl-k">public</span> ArmMode armMode;
+
+    [SerializeField]
+    <span class="pl-k">private</span> Vector3 _handleBack, _handleFront;
+
+    <span class="pl-k">public</span> <span class="pl-en">BezierPoint</span>(<span class="pl-k">Vector3</span> <span class="pl-smi">pos</span>, <span class="pl-k">Vector3</span> <span class="pl-smi">_handleB</span>, <span class="pl-k">Vector3</span> <span class="pl-smi">_handleF</span>, <span class="pl-k">int</span> <span class="pl-smi">iter</span>, <span class="pl-k">ArmMode</span> <span class="pl-smi">armM</span>)
+    {
+        position = pos;
+        _handleBack = _handleB;
+        _handleFront = _handleF;
+        iterations = iter;
+        armMode = armM;
+    }
+}
+
+<span class="pl-k">public</span> <span class="pl-k">enum</span> <span class="pl-en">ArmMode</span>
+{
+    Mirror,
+    MirrorAngle,
+    Induvidual
+}</pre></div>
+
 <h3>
 <a id="qubic-bézier-curve" class="anchor" href="#qubic-b%C3%A9zier-curve" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Qubic Bézier Curve</h3>
 
