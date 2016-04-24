@@ -177,6 +177,15 @@
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
+<span class="pl-k">using</span> UnityEditor<span class="pl-k">;</span>
+
+[CustomEditor(<span class="pl-k">typeof</span>(BezierPath))]
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">BezierPathEditor</span> : <span class="pl-k">Editor</span>
+{
+    <span class="pl-k">private</span> BezierPath bezierPath;
+}</pre></div>
+
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> DrawBezierPath()
 {
     <span class="pl-k">for</span> (<span class="pl-k">int</span> bezierPointNumber = <span class="pl-c1">0</span>; bezierPointNumber &lt; bezierPath.bezierPoints.Count - (bezierPath.closed ? <span class="pl-c1">0</span> : <span class="pl-c1">1</span>); bezierPointNumber++)
