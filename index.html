@@ -49,7 +49,18 @@
 <h3>
 <a id="bezierpoint" class="anchor" href="#bezierpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPoint</h3>
 
-<p>Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and add the following code:</p>
+<p>For the BezierPoint Class, we are going to store all the information that has to do with each induvidual BezierPoint.</p>
+
+<ul>
+<li>Position of the BezierPoint</li>
+<li>Position of the back and front handle (both with origin at the position mentioned above)</li>
+<li>ArmMode controlling the handle behaviour</li>
+<li>Bezier iterations</li>
+<li>List of cached points</li>
+<li>List of lengths between cached points</li>
+<li>Total length
+Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and add the following code:</li>
+</ul>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
