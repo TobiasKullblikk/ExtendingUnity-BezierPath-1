@@ -177,6 +177,16 @@
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> DrawBezierPath()
+{
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> bezierPointNumber = <span class="pl-c1">0</span>; bezierPointNumber &lt; bezierPath.bezierPoints.Count - (bezierPath.closed ? <span class="pl-c1">0</span> : <span class="pl-c1">1</span>); bezierPointNumber++)
+    {
+        <span class="pl-k">for</span> (<span class="pl-k">int</span> iteration = <span class="pl-c1">0</span>; iteration &lt; bezierPath.bezierPoints[bezierPointNumber].iterations + <span class="pl-c1">1</span>; iteration++)
+            Handles.DrawLine(bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration]),
+                bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration + <span class="pl-c1">1</span>]));
+    }
+}</pre></div>
+
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/TobiasKullblikk/ExtendingUnity-BezierPath-1">Extending Unity - Bézier Path: Tutorial 1</a> is maintained by <a href="https://github.com/TobiasKullblikk">TobiasKullblikk</a>.</span>
 
