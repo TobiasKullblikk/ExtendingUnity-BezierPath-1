@@ -163,6 +163,8 @@
     }
 }</pre></div>
 
+<p>This next piece of code will be addded to the BezierPath class. It will update the curve in front of the BezierPoint and the curve behind it (The BezierPoint indexed below). We also recalculate our length, but dont include the last curve as it is the closing gap and will be included later when making the length property.</p>
+
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> Generate(<span class="pl-k">int</span> index)
 {
     <span class="pl-k">if</span> (bezierPoints.Count &gt; <span class="pl-c1">1</span>)
@@ -176,10 +178,12 @@
         _length += bezierPoints[i].length;
 }</pre></div>
 
+<p>Nice ! Now we have our basic implementation of the BezierPath logic completed. We still can't see anything in our SceneView though. Let's do something about that!</p>
+
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
-<p>blabalblablalbabajidjfoidfdf. 
+<p>blabalblablalbabajidjfoidfdf.
 ijdfijdi... dfdfiio iero  pwpe  ...</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
