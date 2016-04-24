@@ -26,18 +26,18 @@
 
 <p>Unity offers an extensive API for extending the editor through scripts in your project. Throughout the parts of this guide, we will learn to master this power and become a Wizard of Unity. We'll take a closer look at interacting with points in the scene using Handles, building custom interfaces for the SceneView and customizing the InspectorView to our liking.</p>
 
-<p>Bézier Curves are often used in computer software as they are easy to implement, easy to use and the quality of the curves can be scaled indefinitely.</p>
+<p>Bézier Curves are popular in computer software as they are easy to implement, easy to use and the quality of the curves can be scaled indefinitely.</p>
 
 <h3>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>Bézier Curves are classified by its order, that is, how many control points it uses. When working with Bézier Curves in computer software, you are most likely using Cubic Bézier Curves. These curves are of the 4th order, meaning they consists of 4 control points.</p>
+<p>Bézier Curves are classified by its order, that is, by how many control points it uses. When working with Bézier Curves in computer software, you are most likely using Cubic Bézier Curves. These curves are of the 4th order, meaning they consists of 4 control points.</p>
 
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/B%C3%A9zier_3_big.gif/240px-B%C3%A9zier_3_big.gif" alt="Figure 1.1: Illustration on Qubic Bézier Curves /Wikipedia"></p>
+<p><a href="https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/B%C3%A9zier_3_big.gif/240px-B%C3%A9zier_3_big.gif">Figure 1.1: Illustration on Qubic Bézier Curves /Wikipedia</a></p>
 
 <p>When building scripts for the editor, it's important to keep performance in mind. You don't want your tools to be chewing off all the resources Unity and your system has to offer. Seeing how Bezier Paths work, it becomes obvious to us that when a point is being modified, only the connected 'parts' of the path will be affected. We will use this information to narrow down what parts of the BezierPath needs to be regenerated when.</p>
 
-<p><img src="https://i.gyazo.com/0033536b408c34598c5c438afa09de57.gif" alt="Figure 1.2: The final product in action"></p>
+<p><a href="https://i.gyazo.com/0033536b408c34598c5c438afa09de57.gif">Figure 1.2: The final product in action</a></p>
 
 <h3>
 <a id="bezierpoint" class="anchor" href="#bezierpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPoint</h3>
