@@ -101,10 +101,26 @@
 }</pre></div>
 
 <h3>
-<a id="point-iteration" class="anchor" href="#point-iteration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Point Iteration</h3>
+<a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
+<span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
+
+<span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">BezierPath</span> : <span class="pl-k">MonoBehaviour</span>
+{
+    <span class="pl-c">// TODO: Add length get property, respecting closed paths</span>
+
+    <span class="pl-k">public</span> List&lt;BezierPoint&gt; bezierPoints = <span class="pl-k">new</span> List&lt;BezierPoint&gt;();
+    <span class="pl-k">public</span> <span class="pl-k">bool</span> closed = <span class="pl-c1">false</span>;
+    <span class="pl-k">public</span> <span class="pl-k">bool</span> hideTransform = <span class="pl-c1">false</span>, freeHandle = <span class="pl-c1">true</span>, dialogOpen = <span class="pl-c1">true</span>;
+    <span class="pl-k">public</span> Color color = Color.white, colorSelected = Color.red;
+    <span class="pl-k">public</span> <span class="pl-k">float</span> sizePosition = <span class="pl-c1">0.25f</span>, sizeHandle = <span class="pl-c1">0.15f</span>;
+
+    <span class="pl-k">private</span> <span class="pl-k">float</span> _length = <span class="pl-c1">0</span>;
+}</pre></div>
 
 <h3>
-<a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
+<a id="point-iteration" class="anchor" href="#point-iteration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Point Iteration</h3>
 
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
