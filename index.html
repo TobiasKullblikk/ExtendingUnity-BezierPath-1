@@ -105,7 +105,7 @@
 <h3>
 <a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
 
-<p>The BezierPath class extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. </p>
+<p>The BezierPath class extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. I will talk more about this when implementing the Generate method to the BezierPath class.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
@@ -159,6 +159,19 @@
         <span class="pl-k">if</span> (iteration != <span class="pl-c1">0</span>)
         { lengths.Add(Vector3.Distance(points[iteration - <span class="pl-c1">1</span>], points[iteration])); length += lengths[lengths.Count - <span class="pl-c1">1</span>]; }
     }
+}</pre></div>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> Generate(<span class="pl-k">int</span> index)
+{
+    <span class="pl-k">if</span> (bezierPoints.Count &gt; <span class="pl-c1">1</span>)
+    {
+        bezierPoints[index].IterateBezierPoints(bezierPoints[Mod(index + <span class="pl-c1">1</span>, bezierPoints.Count)]);
+        bezierPoints[Mod(index - <span class="pl-c1">1</span>, bezierPoints.Count)].IterateBezierPoints(bezierPoints[index]);
+    }
+
+    _length = <span class="pl-c1">0</span>;
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; bezierPoints.Count - <span class="pl-c1">1</span>; i++)
+        _length += bezierPoints[i].length;
 }</pre></div>
 
 <h3>
