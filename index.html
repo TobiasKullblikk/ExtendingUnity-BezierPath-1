@@ -49,7 +49,7 @@
 <h3>
 <a id="bezierpoint" class="anchor" href="#bezierpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPoint</h3>
 
-<p>For the BezierPoint Class, we are going to store all the information that has to do with each induvidual BezierPoint.</p>
+<p>For the BezierPoint class, we are going to store all the information that has to do with each induvidual BezierPoint.</p>
 
 <ul>
 <li>Position of the BezierPoint.</li>
@@ -113,7 +113,7 @@
     <span class="pl-k">public</span> List&lt;BezierPoint&gt; bezierPoints = <span class="pl-k">new</span> List&lt;BezierPoint&gt;();
     <span class="pl-k">public</span> <span class="pl-k">bool</span> closed = <span class="pl-c1">false</span>;
     <span class="pl-k">public</span> <span class="pl-k">bool</span> hideTransform = <span class="pl-c1">false</span>, freeHandle = <span class="pl-c1">true</span>, dialogOpen = <span class="pl-c1">true</span>;
-    <span class="pl-k">public</span> Color color = Color.white, colorSelected = Color.red;
+    <span class="pl-k">public</span> Color color = Color.black, colorSelected = Color.red;
     <span class="pl-k">public</span> <span class="pl-k">float</span> sizePosition = <span class="pl-c1">0.25f</span>, sizeHandle = <span class="pl-c1">0.15f</span>;
 
     <span class="pl-k">private</span> <span class="pl-k">float</span> _length = <span class="pl-c1">0</span>;
@@ -124,11 +124,32 @@
 
 <p><img src="https://upload.wikimedia.org/math/2/c/7/2c7967667f039ce77d8984f5e4cd088c.png" alt=""></p>
 
-<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value <em>t</em> between 0.0 and 1.0. Notice how the method is nearly identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool. It was added to the BezierPoint class as it is the class handling the cached points.</p>
+<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value <em>t</em> between 0.0 and 1.0. Notice how the method is identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool. It was added to the BezierPoint class as it is the class handling the cached points.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> Vector3 CalculateBezier(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, <span class="pl-k">float</span> t)
 {
     <span class="pl-k">return</span> (Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">3</span>) * p0) + (<span class="pl-c1">3</span> * Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">2</span>) * t * p1) + (<span class="pl-c1">3</span> * (<span class="pl-c1">1</span> - t) * t * t * p2) + (t * t * t * p3);
+}</pre></div>
+
+<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. </p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> IterateBezierPoints(BezierPoint bezierPoint)
+{
+    points.Clear();
+    lengths.Clear();
+    length = <span class="pl-c1">0</span>;
+
+    Vector3 point_0 = position;
+    Vector3 point_1 = point_0 + handleFront;
+    Vector3 point_3 = bezierPoint.position;
+    Vector3 point_2 = point_3 + bezierPoint.handleBack;
+
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> iteration = <span class="pl-c1">0</span>; iteration &lt;= iterations + <span class="pl-c1">1</span>; iteration++)
+    {
+        points.Add(CalculateBezier(point_0, point_1, point_2, point_3, ((<span class="pl-k">float</span>)iteration) / (<span class="pl-k">float</span>)(iterations + <span class="pl-c1">1</span>)));
+        <span class="pl-k">if</span> (iteration != <span class="pl-c1">0</span>)
+        { lengths.Add(Vector3.Distance(points[iteration - <span class="pl-c1">1</span>], points[iteration])); length += lengths[lengths.Count - <span class="pl-c1">1</span>]; }
+    }
 }</pre></div>
 
 <h3>
