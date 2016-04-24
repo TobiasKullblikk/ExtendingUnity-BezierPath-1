@@ -70,8 +70,8 @@
 <span class="pl-k">public</span> <span class="pl-k">class</span> <span class="pl-en">BezierPoint</span>
 {
     <span class="pl-c">// TODO: Make handles act according to current ArmMode in the 'set' accessors</span>
-    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleBack</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
-    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleFront</span> { <span class="pl-k">get</span>; <span class="pl-k">set</span>; }
+    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleBack</span> { <span class="pl-k">get</span> { <span class="pl-k">return</span> _handleBack; } <span class="pl-k">set</span> { _handleBack = <span class="pl-k">value</span>; } }
+    <span class="pl-k">public</span> Vector3 <span class="pl-en">handleFront</span> { <span class="pl-k">get</span> { <span class="pl-k">return</span> _handleFront; } <span class="pl-k">set</span> { _handleFront = <span class="pl-k">value</span>; } }
 
     <span class="pl-k">public</span> Vector3 position;
     <span class="pl-k">public</span> List&lt;Vector3&gt; points = <span class="pl-k">new</span> List&lt;Vector3&gt;();
