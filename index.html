@@ -100,8 +100,12 @@
     Induvidual
 }</pre></div>
 
+<p>Blablablabla talk about the code.. serialize blablabla..Blablablabla talk about the code.. serialize blablabla..Blablablabla talk about the code.. serialize blablabla..Blablablabla talk about the code.. serialize blablabla..Blablablabla talk about the code.. serialize blablabla..Blablablabla talk about the code.. serialize blablabla..</p>
+
 <h3>
 <a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
+
+<p>The BezierPath class extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. </p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
@@ -113,10 +117,15 @@
     <span class="pl-k">public</span> List&lt;BezierPoint&gt; bezierPoints = <span class="pl-k">new</span> List&lt;BezierPoint&gt;();
     <span class="pl-k">public</span> <span class="pl-k">bool</span> closed = <span class="pl-c1">false</span>;
     <span class="pl-k">public</span> <span class="pl-k">bool</span> hideTransform = <span class="pl-c1">false</span>, freeHandle = <span class="pl-c1">true</span>, dialogOpen = <span class="pl-c1">true</span>;
-    <span class="pl-k">public</span> Color color = Color.black, colorSelected = Color.red;
+    <span class="pl-k">public</span> Color color = Color.white, colorSelected = Color.red;
     <span class="pl-k">public</span> <span class="pl-k">float</span> sizePosition = <span class="pl-c1">0.25f</span>, sizeHandle = <span class="pl-c1">0.15f</span>;
 
     <span class="pl-k">private</span> <span class="pl-k">float</span> _length = <span class="pl-c1">0</span>;
+
+    <span class="pl-k">public</span> <span class="pl-k">static</span> <span class="pl-k">int</span> <span class="pl-en">Mod</span>(<span class="pl-k">int</span> <span class="pl-smi">a</span>, <span class="pl-k">int</span> <span class="pl-smi">b</span>)
+    {
+        <span class="pl-k">return</span> a - b * (<span class="pl-k">int</span>)Mathf.Floor(a / (<span class="pl-k">float</span>)b);
+    }
 }</pre></div>
 
 <h3>
@@ -131,7 +140,7 @@
     <span class="pl-k">return</span> (Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">3</span>) * p0) + (<span class="pl-c1">3</span> * Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">2</span>) * t * p1) + (<span class="pl-c1">3</span> * (<span class="pl-c1">1</span> - t) * t * t * p2) + (t * t * t * p3);
 }</pre></div>
 
-<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. It will be executed from one BezierPoint and taking another as an argument. All the cache for the BezierPoint executing the method will be regenerated. For each loop-cycle, we increment the value <em>t</em> and add the associated point to the cache. Lengths are calculated and stored as well. Notice how the for-loop is bound to always run at least two times. This is to always include the endpoints (the position of each BezierPoint used in the method, where t == 0.0 or t == 1.0).</p>
+<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. It will be executed from one BezierPoint and taking another as an argument. All cache for the BezierPoint executing the method will be regenerated. For each loop-cycle, we increment the value <em>t</em> and add the associated point to the cache. Lengths are calculated and stored as well. Notice how the for-loop is bound to always run at least two times. This is to always include the endpoints (where t == 0.0 or t == 1.0).</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> IterateBezierPoints(BezierPoint bezierPoint)
 {
