@@ -131,7 +131,7 @@
     <span class="pl-k">return</span> (Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">3</span>) * p0) + (<span class="pl-c1">3</span> * Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">2</span>) * t * p1) + (<span class="pl-c1">3</span> * (<span class="pl-c1">1</span> - t) * t * t * p2) + (t * t * t * p3);
 }</pre></div>
 
-<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. </p>
+<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. It will be executed from one BezierPoint and taking another as an argument. All the cache for the BezierPoint executing the method will be regenerated. For each loop-cycle, we increment the value <em>t</em> and add the associated point to the cache. Lengths are calculated and stored as well. Notice how the for-loop is bound to always run at least two times. This is to always include the endpoints (the position of each BezierPoint used in the method, where t == 0.0 or t == 1.0).</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> IterateBezierPoints(BezierPoint bezierPoint)
 {
