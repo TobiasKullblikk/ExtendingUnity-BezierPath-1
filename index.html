@@ -40,11 +40,11 @@
 
 <p><img src="https://i.gyazo.com/0033536b408c34598c5c438afa09de57.gif" alt=""></p>
 
-<p>Each BezierPoint will hold cached positions for the points generated between the current BezierPoint and the one indexed above it. This list of cached points will be named 'points' in the BezierPoint class. The list will also contain the current BezierPoint position as the first element, and the position of the BezierPoint indexed above it as the last element.</p>
+<p>Each BezierPoint will store cached positions for the points generated between the current BezierPoint and the one indexed above it. This list of cached points will be named 'points' in the BezierPoint class. The list will also contain the current BezierPoint position as the first element, and the position of the BezierPoint indexed above it as the last element.</p>
 
 <p><img src="https://i.gyazo.com/05e11314ccdd7583ed967f90aeeef3dd.png" alt=""></p>
 
-<p>When building scripts for the editor, it's important to keep performance in mind. You don't want your tools to be chewing off all the resources Unity and your system has to offer. Seeing how Bézier Curves work, it becomes obvious to us that when a point is being modified, only the connected 'parts' of the path will be affected. We will use this information to narrow down what parts of the BezierPath needs to be regenerated when.</p>
+<p>When building scripts for the editor, it's important to keep performance in mind. You don't want your tools to be chewing off all the resources Unity and your system has to offer. Seeing how Bézier Curves work, it becomes obvious to us that when a point is being modified, only the connected 'parts' of the path will be affected. We will use this information to narrow down what parts of the BezierPath needs to be regenerated when. While Unity is fully capable of regenerating the whole curve every frame, you never want to use more resources than what is strictly necessary.</p>
 
 <h3>
 <a id="bezierpoint" class="anchor" href="#bezierpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPoint</h3>
