@@ -162,7 +162,7 @@
     }
 }</pre></div>
 
-<p>This next piece of code will be addded to the BezierPath class. It will update the curve in front of the BezierPoint and the curve behind it (The BezierPoint indexed below). We also recalculate our length, but dont include the last curve as it is the closing gap and will be included later when making the length property. We use the Mod method to wrap the index to keep it within the allowed indexes. Remember that this is the mathematical Modulo and therefore works differently than the (%)-operator.</p>
+<p>This next piece of code will be addded to the BezierPath class. It will update the curve in front of the BezierPoint and the curve behind it (The BezierPoint indexed below). We also recalculate our length, but dont include the length of the last curve as it is the closing gap and will be included later when making the length property. We use the Mod method to wrap the index to keep it within the allowed indexes. Remember that this is the mathematical Modulo and therefore works differently than the (%)-operator.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> Generate(<span class="pl-k">int</span> index)
 {
