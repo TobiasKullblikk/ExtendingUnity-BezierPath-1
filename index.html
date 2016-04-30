@@ -33,7 +33,7 @@
 
 <p>Bézier Curves are used to generate smooth curves from a given set of control points. The curves will always start with the same position as the first control point and end at the position of the last. Bézier Curves are popular in computer software as they are easy to implement, easy to use and the quality of the curves can be scaled indefinitely.</p>
 
-<p>Bézier Curves are classified by its order, that is, by how many control points it uses. When working with Bézier Curves in computer software, you are most likely using Cubic Bézier Curves. These curves are of the 4th order, meaning they consists of 4 control points. The following animation illustrates how the value <em>t</em>, ranging from 0.0 to 1.0, can be used to retrieve any position along the Cubic Bézier Curve. Here we have control points 0 &amp; 3 acting as endpoints, while control points 1 &amp; 2 acts like magnetic forces attracting the curve. The blue and green lines help visualize how the formula calculates points along the curve.</p>
+<p>Bézier Curves are classified by its order, that is, by how many control points it uses. When working with Bézier Curves in computer software, you are most likely using Cubic Bézier Curves. These curves are of the 4th order, meaning they consists of 4 control points. The following animation illustrates how the value 't', ranging from 0.0 to 1.0, can be used to retrieve any position along the Cubic Bézier Curve. Here we have control points 0 &amp; 3 acting as endpoints, while control points 1 &amp; 2 acts like magnetic forces attracting the curve. The blue and green lines help visualize how the formula calculates points along the curve.</p>
 
 <p><img src="https://i.gyazo.com/f7982ce558d0c3fdfd3d22fe2b9e18a0.gif" alt=""></p>
 
@@ -105,7 +105,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
 <h3>
 <a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
 
-<p>The BezierPath class <em>"Assets\BezierPath\BezierPath.cs"</em> extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. I will talk more about this when implementing the Generate method to the BezierPath class.</p>
+<p>The BezierPath class <em>"Assets\BezierPath\BezierPath.cs"</em> extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Modulo method, to help contain the selected index within its bounds. I will talk more about this when implementing the 'Generate' method to the BezierPath class.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
@@ -133,14 +133,14 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
 
 <p><img src="https://upload.wikimedia.org/math/2/c/7/2c7967667f039ce77d8984f5e4cd088c.png" alt=""></p>
 
-<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value <em>t</em> between 0.0 and 1.0. The method is identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool. It was added to the BezierPoint class as it is the class handling the cached points.</p>
+<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value 't' between 0.0 and 1.0. The method is identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool. It was added to the BezierPoint class as it is the class handling the cached points.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> Vector3 CalculateBezier(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, <span class="pl-k">float</span> t)
 {
     <span class="pl-k">return</span> (Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">3</span>) * p0) + (<span class="pl-c1">3</span> * Mathf.Pow(<span class="pl-c1">1</span> - t, <span class="pl-c1">2</span>) * t * p1) + (<span class="pl-c1">3</span> * (<span class="pl-c1">1</span> - t) * t * t * p2) + (t * t * t * p3);
 }</pre></div>
 
-<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. It will be executed from one BezierPoint and taking another as an argument. All cache for the BezierPoint executing the method will be regenerated. For each loop-cycle, we increment the value <em>t</em> and add the associated point to the cache. Lengths are calculated and stored as well. Notice how the for-loop is bound to always run at least two times. This is to always include the endpoints (where t == 0.0 or t == 1.0).</p>
+<p>Next we are going to make the method generating all the points between two BezierPoints. We are going to add this method to the BezierPoint class as well. It will be executed from one BezierPoint and taking another as an argument. All cache for the BezierPoint executing the method will be regenerated. For each loop-cycle, we increment the value 't' and add the associated point to the cache. Lengths are calculated and stored as well. Notice how the for-loop is bound to always run at least two times. This is to always include the endpoints (where t == 0.0 or t == 1.0).</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> IterateBezierPoints(BezierPoint bezierPoint)
 {
@@ -161,7 +161,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
     }
 }</pre></div>
 
-<p>This next piece of code will be addded to the BezierPath class. It will update the curve in front of the BezierPoint and the curve behind it (The BezierPoint indexed below). We also recalculate our length, but dont include the length of the last curve as it is the closing gap and will be included later when making the length property. We use the Mod method to wrap the index to keep it within the allowed indexes. Remember that this is the mathematical Modulo and therefore works differently than the (%)-operator.</p>
+<p>This next piece of code will be addded to the BezierPath class. It will update the curve in front of the BezierPoint and the curve behind it (The BezierPoint indexed below). We also recalculate our length, but dont include the length of the last curve as it is the closing gap and will be included later when making the 'length' property. We use the Mod method to wrap the index to keep it within the allowed indexes. Remember that this is the mathematical Modulo and therefore works differently than the (%)-operator.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">void</span> Generate(<span class="pl-k">int</span> index)
 {
@@ -181,7 +181,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
-<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named "Editor" so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable bezierPath was added to store the current BezierPath, it will be reassigned every update.</p>
+<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named 'Editor' so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable 'bezierPath' was added to store the current BezierPath, it will be reassigned every update.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> UnityEditor<span class="pl-k">;</span>
@@ -192,7 +192,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
     <span class="pl-k">private</span> BezierPath bezierPath;
 }</pre></div>
 
-<p>Next, we're going to add a method for drawing our path. Here we are simply looping through every BezierPoint of the bezierPath and then looping through all the generated points for each BezierPoint. We draw a line from every generated point to the next using Handles.DrawLine(). The Handles class offers different methods for adding 3D GUI controls and drawing in the SceneView. We transform every point using the BezierPath transform so that the path will be displayed with the correct transformation.</p>
+<p>Next, we're going to add a method for drawing our path. Here we are simply looping through every BezierPoint of the BezierPath and then looping through all the generated points for each BezierPoint. We draw a line from every generated point to the next using Handles.DrawLine(). The Handles class offers different methods for adding 3D GUI controls and drawing in the SceneView, and will be used more throughout the parts of this guide. Every point is transformed using the BezierPath Transform.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> DrawBezierPath()
 {
@@ -202,6 +202,16 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
             Handles.DrawLine(bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration]),
                 bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration + <span class="pl-c1">1</span>]));
     }
+}</pre></div>
+
+<p>The last method to add now is OnSceneGUI(). The method is derived from the Editor class and will be executed every time the SceneView updates. It is from this method that we will perform everything that has to do with drawing things in the SceneView. Throughout the development of our tool, we want to keep the logic in this method as simple as possible. Only the relevant main modules of our tool will be executed from here. The 'bezierPath' variable also gets updated here and is cast from the 'target' variable derived from the Editor class.</p>
+
+<div class="highlight highlight-source-cs"><pre><span class="pl-k">void</span> OnSceneGUI()
+{
+    bezierPath = (BezierPath)target;
+
+    <span class="pl-k">if</span> (bezierPath.bezierPoints.Count &gt; <span class="pl-c1">1</span>)
+        DrawBezierPath();
 }</pre></div>
 
 <h3>
