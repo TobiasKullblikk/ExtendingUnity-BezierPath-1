@@ -45,7 +45,7 @@
 
 <p><img src="https://i.gyazo.com/05e11314ccdd7583ed967f90aeeef3dd.png" alt=""></p>
 
-<p>When building scripts for the editor, it's important to keep performance in mind. You don't want your tools to be chewing off all the resources Unity and your system has to offer. Seeing how Bézier Curves work, it becomes obvious to us that when a point is being modified, only the connected 'parts' of the path will be affected. We will use this information to narrow down what parts of the BezierPath needs to be regenerated when. While Unity is fully capable of regenerating the whole curve every frame, you never want to use more resources than what is strictly necessary.</p>
+<p>When building scripts for the editor, it's important to keep performance in mind. You don't want your tools to be chewing off all the resources Unity and your system has to offer. Seeing how Bézier Curves work, it becomes obvious to us that when a point is being modified, only the connected 'parts' of the path will be affected. We will use this information to narrow down what parts of the BezierPath needs to be regenerated when. While Unity is fully capable of regenerating the whole curve every update, you never want to use more resources than what is strictly necessary.</p>
 
 <h3>
 <a id="bezierpoint" class="anchor" href="#bezierpoint" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPoint</h3>
@@ -59,10 +59,9 @@
 <li>Iterations, the number of points added between this BezierPoint and the next.</li>
 <li>List of cached points.</li>
 <li>List of lengths between cached points.</li>
-<li>Total length.</li>
+<li>Total length.
+Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill it with the following code, code-discussion follows after:</li>
 </ul>
-
-<p>Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill it with the following code, code-discussion follows after:</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
@@ -101,12 +100,12 @@
     Induvidual
 }</pre></div>
 
-<p>The class was tagged with 'System.Serializable' so that its properties can show in the inspector if used with a Component. As noted with a 'TODO' comment, the handle-properties will be updated later on in development. A new enum was made to keep track of the BezierPoint ArmMode. The variables for holding the handle positions are private and will only be accessed using their respective properties. These variables have been tagged with 'SerializeField' so that their information will be saved between loading scenes. This would not happen automatically by default because of their accessibility(private).</p>
+<p>The class was tagged with 'System.Serializable' so that its properties can show in the inspector if used with a Component. As noted with a 'TODO' comment, the handle-properties will be updated later on in development. A new enum was made to keep track of the BezierPoint ArmMode. The variables for holding the handle positions are private and will only be accessed using their respective properties. These variables have been tagged with 'SerializeField' so that their information will be saved between loading scenes. This would not happen automatically by default because of their accessibility (private).</p>
 
 <h3>
 <a id="bezierpath" class="anchor" href="#bezierpath" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>BezierPath</h3>
 
-<p>The BezierPath class extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. I will talk more about this when implementing the Generate method to the BezierPath class.</p>
+<p>The BezierPath class <em>"Assets\BezierPath\BezierPath.cs"</em> extends MonoBehaviour so that we can use it as a Component with our GameObjects. The most essential data stored in the BezierPath is the list of BezierPoints and the 'closed' variable. The latter specifies if the last BezierPoint will connect to the first one, creating a closed path. The other variables added to the class will be used later on in the guide and are self-explanatory with their names. I also implemented a mathematical Mod method, to help contain the selected index within its bounds. I will talk more about this when implementing the Generate method to the BezierPath class.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> System.Collections.Generic<span class="pl-k">;</span>
@@ -182,7 +181,7 @@
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
-<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named "Editor" so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected.</p>
+<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named "Editor" so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable bezierPath was added to store the current BezierPath, it will be reassigned every update.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> UnityEditor<span class="pl-k">;</span>
@@ -193,7 +192,7 @@
     <span class="pl-k">private</span> BezierPath bezierPath;
 }</pre></div>
 
-<p>gfgdfgdfg, rtuy.. ttuyu ...</p>
+<p>Next, we're going to add a method for drawing our path. Here we are simply looping through every BezierPoint of the bezierPath and then looping through all the generated points for each BezierPoint. We draw a line from every generated point to the next using Handles.DrawLine(). The Handles class offers different methods for adding 3D GUI controls and drawing in the SceneView. We transform every point using the BezierPath transform so that the path will be displayed with the correct transformation.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> DrawBezierPath()
 {
