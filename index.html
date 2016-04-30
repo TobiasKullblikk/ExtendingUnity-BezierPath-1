@@ -117,7 +117,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
     <span class="pl-k">public</span> List&lt;BezierPoint&gt; bezierPoints = <span class="pl-k">new</span> List&lt;BezierPoint&gt;();
     <span class="pl-k">public</span> <span class="pl-k">bool</span> closed = <span class="pl-c1">false</span>;
     <span class="pl-k">public</span> <span class="pl-k">bool</span> hideTransform = <span class="pl-c1">false</span>, freeHandle = <span class="pl-c1">true</span>, dialogOpen = <span class="pl-c1">true</span>;
-    <span class="pl-k">public</span> Color color = Color.white, colorSelected = Color.red;
+    <span class="pl-k">public</span> Color color = Color.black, colorSelected = Color.red;
     <span class="pl-k">public</span> <span class="pl-k">float</span> sizePosition = <span class="pl-c1">0.25f</span>, sizeHandle = <span class="pl-c1">0.15f</span>;
 
     <span class="pl-k">private</span> <span class="pl-k">float</span> _length = <span class="pl-c1">0</span>;
@@ -181,7 +181,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
-<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named 'Editor' so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable 'bezierPath' was added to store the current BezierPath, it will be reassigned every update.</p>
+<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named 'Editor' so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable 'bezierPath' was added to store the current BezierPath, it will be reassigned on every update.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> UnityEditor<span class="pl-k">;</span>
@@ -204,11 +204,15 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
     }
 }</pre></div>
 
-<p>The last method to add now is OnSceneGUI(). The method is derived from the Editor class and will be executed every time the SceneView updates. It is from this method that we will perform everything that has to do with drawing things in the SceneView. Throughout the development of our tool, we want to keep the logic in this method as simple as possible. Only the relevant main modules of our tool will be executed from here. The 'bezierPath' variable also gets updated here and is cast from the 'target' variable derived from the Editor class.</p>
+<p>The last method to add now is OnSceneGUI(). The method is derived from the Editor class and will be executed every time the SceneView updates. It is from this method that we will perform everything that has to do with drawing things in the SceneView. Throughout the development of our tool, we want to keep the logic in this method as simple as possible. Only the relevant main modules of our tool will be executed from here. The 'bezierPath' variable also gets updated here and is cast from the 'target' variable derived from the Editor class. A temporary for-loop has been added to generate our path every frame until we implement a more effective way of doing so. Drawing the path will only happen if we have two or more BezierPoints in our BezierPath.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">void</span> OnSceneGUI()
 {
     bezierPath = (BezierPath)target;
+
+    <span class="pl-c">// Removed later, don't want to regenerate full path every update </span>
+    <span class="pl-k">for</span> (<span class="pl-k">int</span> i = <span class="pl-c1">0</span>; i &lt; bezierPath.bezierPoints.Count; i++)
+        bezierPath.Generate(i);
 
     <span class="pl-k">if</span> (bezierPath.bezierPoints.Count &gt; <span class="pl-c1">1</span>)
         DrawBezierPath();
