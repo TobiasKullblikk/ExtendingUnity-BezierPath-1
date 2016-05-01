@@ -205,7 +205,7 @@
     }
 }</pre></div>
 
-<p>The last method to add for this tutorial is 'OnSceneGUI'. The method is derived from the Editor class and will be executed every time the SceneView updates. It is from this method that we will perform everything that has to do with drawing things in the SceneView. Throughout the development of our tool, we want to keep the logic in this method as simple as possible. Only the relevant main modules of our tool will be executed from here. The 'bezierPath' variable is set and cast from the 'target' variable derived from the Editor class. 'target' is the current object being inspected. A temporary for-loop has been added to generate our path every frame until we develop a more effective way of doing so. Drawing the path will only happen if we have two or more BezierPoints in our BezierPath.</p>
+<p>The last method to add for this tutorial is 'OnSceneGUI'. The method is derived from the Editor class and will be executed every time the SceneView updates. It is from this method that we will perform everything that has to do with drawing things in the SceneView. Throughout the development of our tool, we want to keep the logic in this method as simple as possible. Only the relevant main modules of our tool will be executed from here. The 'bezierPath' variable is set and cast from the 'target' variable derived from the Editor class. 'target' is the current object being inspected. A temporary for-loop has been added to generate our path every update until we develop a more effective way of doing so. Drawing the path will only happen if we have two or more BezierPoints in our BezierPath.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">void</span> OnSceneGUI()
 {
