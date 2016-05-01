@@ -133,7 +133,7 @@ Let's make a new C# script <em>"Assets\BezierPath\BezierPoint.cs"</em> and fill 
 
 <p><img src="https://upload.wikimedia.org/math/2/c/7/2c7967667f039ce77d8984f5e4cd088c.png" alt=""></p>
 
-<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value 't' between 0.0 and 1.0. The method is identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool. It was added to the BezierPoint class as it is the class handling the cached points.</p>
+<p>It is always important to break your software into small manageable modules. The first method we will be implementing is the Cubic Bézier Curve formula. It will take 4 control points and a value 't' between 0.0 and 1.0. The method is identical to the formula. I made the method static so that it is ready to be used for purposes other than this exact tool as well. It was added to the BezierPoint class as it is the class handling the cached points.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">public</span> <span class="pl-k">static</span> Vector3 CalculateBezier(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, <span class="pl-k">float</span> t)
 {
