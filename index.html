@@ -183,7 +183,7 @@
 <h3>
 <a id="displaying-the-path" class="anchor" href="#displaying-the-path" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Displaying the path</h3>
 
-<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named 'Editor' so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will get access to the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable 'bezierPath' was added to store the current BezierPath.</p>
+<p>Create a new C# script <em>"Assets\BezierPath\Editor\BezierPathEditor.cs"</em>. It was placed in a folder named 'Editor' so that Unity will treat it like an editor script. Inside the script, we include the UnityEditor to get access to the Editor API. Our class extends the Editor so that it will inherit the Editor functionalities. The class has also been tagged as a CustomEditor of the type BezierPath, meaning it will be used when a GameObject with a BezierPath Component attached is selected. A private variable 'bezierPath' was added to store the current BezierPath.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">using</span> UnityEngine<span class="pl-k">;</span>
 <span class="pl-k">using</span> UnityEditor<span class="pl-k">;</span>
@@ -194,7 +194,7 @@
     <span class="pl-k">private</span> BezierPath bezierPath;
 }</pre></div>
 
-<p>Next, we're going to add a method for drawing our path. Here we are simply looping through every BezierPoint of the BezierPath and then looping through all the generated points for each BezierPoint. We draw a line from every generated point to the next using 'Handles.DrawLine'. The Handles class offers different methods for adding 3D GUI controls and drawing in the SceneView, and will be used more throughout the parts of this guide. Every point is transformed using the BezierPath Transform.</p>
+<p>Next, we're going to add a method for drawing our path. Here we are simply looping through every BezierPoint of the BezierPath and then looping through all the generated points for each BezierPoint. We draw a line from every generated point to the next using 'Handles.DrawLine'. The Handles class offers different methods for adding 3D GUI controls and drawing in the SceneView. It will be used more throughout the parts of this guide. Every point is transformed using the BezierPath Transform.</p>
 
 <div class="highlight highlight-source-cs"><pre><span class="pl-k">private</span> <span class="pl-k">void</span> DrawBezierPath()
 {
@@ -229,7 +229,7 @@
 
 <p>If you like this guide and want more, be sure to follow <a href="https://twitter.com/TobiasKullblikk">me on twitter @TobiasKullblikk</a>! In the next part, we are going to look at how we can use handles to modify our path intuitively from the SceneView.</p>
 
-<p>When released, it will be linked here and shared on my twitter as well.</p>
+<p>When released, it will be linked to here and shared on my twitter as well.</p>
 
 <p>Adieu!</p>
 
