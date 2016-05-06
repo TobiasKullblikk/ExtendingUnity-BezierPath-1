@@ -200,7 +200,7 @@
 {
     <span class="pl-k">for</span> (<span class="pl-k">int</span> bezierPointNumber = <span class="pl-c1">0</span>; bezierPointNumber &lt; bezierPath.bezierPoints.Count - (bezierPath.closed ? <span class="pl-c1">0</span> : <span class="pl-c1">1</span>); bezierPointNumber++)
     {
-        <span class="pl-k">for</span> (<span class="pl-k">int</span> iteration = <span class="pl-c1">0</span>; iteration &lt; bezierPath.bezierPoints[bezierPointNumber].iterations + <span class="pl-c1">1</span>; iteration++)
+        <span class="pl-k">for</span> (<span class="pl-k">int</span> iteration = <span class="pl-c1">0</span>; iteration &lt; bezierPath.bezierPoints[bezierPointNumber].points.Count - <span class="pl-c1">1</span>; iteration++)
             Handles.DrawLine(bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration]),
                 bezierPath.transform.TransformPoint(bezierPath.bezierPoints[bezierPointNumber].points[iteration + <span class="pl-c1">1</span>]));
     }
